@@ -9,8 +9,6 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const mySqlConnection = require('./config/mysql');
 const resultRoutes = require('./routes/result.routes');
-const authRoutes = require('./routes/auth.routes');
-// const AppRoutes = require('./routes')
 const port = process.env.PORT;
 const logger = require('./logger');
 
@@ -28,10 +26,8 @@ app.listen(port, async () => {
 	displayRoutes(app);
 });
 app.use(morgan('tiny'));
-// app.use(userRoutes);
-app.use(authRoutes);
+
 app.use('/api/v1/inec/results', resultRoutes);
-// app.use(AppRoutes);
 
 app.get('/', (req, res) => {
 	res.status(200).send({

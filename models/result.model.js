@@ -35,16 +35,6 @@ const getPollingUnitResultByLgaID = async (lga_id) => {
 	});
 };
 
-// announced_pu_results` (
-//   `result_id` int(11) NOT NULL AUTO_INCREMENT,
-//   `polling_unit_uniqueid` varchar(50) NOT NULL,
-//   `party_abbreviation` char(4) NOT NULL,
-//   `party_score` int(11) NOT NULL,
-//   `entered_by_user` varchar(50) NOT NULL,
-//   `date_entered` datetime NOT NULL,
-//   `user_ip_address` varchar(50) NOT NULL,
-//   PRIMARY KEY (`result_id`)
-
 const enterPartyScore = async (
 	result_id,
 	polling_unit_uniqueid,
@@ -111,84 +101,7 @@ const getAllLgas = async () => {
 	});
 };
 
-const getOtp = (customer, otp) => {
-	return new Promise((resolve, reject) => {
-		mysqlConnection.query(
-			{
-				sql: `select * from _otps where customer_id =? and otp=?`,
-				values: [customer, otp],
-			},
-			(err, results, fields) => {
-				if (err) {
-					reject(err);
-				}
-				resolve(results);
-			}
-		);
-	});
-};
-
-const newUser = async (
-	email,
-	firstname,
-	surname,
-	password,
-	phone,
-	customer_id
-) => {
-	return new Promise((resolve, reject) => {
-		mysqlConnection.query(
-			{
-				sql: `Insert into customers(email, firstname, surname, password, phone, customer_id)values(?,?,?,?,?,?)`,
-				values: [email, firstname, surname, password, phone, customer_id],
-			},
-			(err, results, fields) => {
-				if (err) {
-					reject(err);
-				}
-				resolve(results);
-			}
-		);
-	});
-};
-
-const getUserDetails = async (customer_id) => {
-	return new Promise((resolve, reject) => {
-		mysqlConnection.query(
-			{
-				sql: `select * from customers where email=?`,
-				values: [email],
-			},
-			(err, results, fields) => {
-				if (err) {
-					reject(err);
-				}
-				resolve(results);
-			}
-		);
-	});
-};
-
-const checkUser = async (email, phone) => {
-	return new Promise((resolve, reject) => {
-		mysqlConnection.query(
-			{
-				sql: `select * from customers where email=? or phone=?`,
-				values: [email, phone],
-			},
-			(err, results, fields) => {
-				if (err) {
-					reject(err);
-				}
-				resolve(results);
-			}
-		);
-	});
-};
 module.exports = {
-	checkUser,
-	getOtp,
-	getUserDetails,
 	getPollingUnitResultByUniqueID,
 	getPollingUnitResultByLgaID,
 	enterPartyScore,

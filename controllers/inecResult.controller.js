@@ -1,12 +1,8 @@
 require('dotenv').config();
-// const resultModel = require('../models/result.model');
 const { setEncoding } = require('../logger');
 const Joi = require('Joi');
 const logger = require('../logger');
 
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcrypt');
-// const { v4: uuidv4 } = require('uuid');
 const {
 	getPollingUnitResultByUniqueID,
 	getPollingUnitResultByLgaID,
@@ -15,9 +11,6 @@ const {
 	getAllLgas,
 } = require('../models/result.model');
 const { isEmpty, doSomeAsyncMagik } = require('../utils/utils');
-// const { readFileAndSendEmail } = require('../services/email.services');
-// const { hashMyPassword } = require('../controllers/users.controllers');
-// const gertresult = async (req, res) => {
 
 const getPollingUnitResult = async (req, res) => {
 	const pollingUnit = req.body.pollingUnitID;
@@ -157,16 +150,6 @@ const getPollingUnitByLga_id = async (req, res) => {
 	}
 };
 const enterPollingUnitScore = async (req, res) => {
-	// announced_pu_results` (
-	//   `result_id` int(11) NOT NULL AUTO_INCREMENT,
-	//   `polling_unit_uniqueid` varchar(50) NOT NULL,
-	//   `party_abbreviation` char(4) NOT NULL,
-	//   `party_score` int(11) NOT NULL,
-	//   `entered_by_user` varchar(50) NOT NULL,
-	//   `date_entered` datetime NOT NULL,
-	//   `user_ip_address` varchar(50) NOT NULL,
-	//   PRIMARY KEY (`result_id`)
-
 	const resultSchema = Joi.object({
 		result_id: Joi.number(),
 		polling_unit_uniqueid: Joi.string().required(),
@@ -188,7 +171,6 @@ const enterPollingUnitScore = async (req, res) => {
 			validateResult.error.details[0].message
 		);
 
-		//console.log(validateUser.error.details[0].message)
 		res.status(422).send({
 			status: false,
 			message: validateResult.error.details[0].message,
